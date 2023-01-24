@@ -57,13 +57,17 @@ module.exports = {
 
   resolve: {
     alias: {
-      "react-native": "react-native-web",
+      "react-native$": "react-native-web",
+      "react-native/package.json": "react-native-web/package.json",
       "react-native-svg": "react-native-svg-web",
     },
-    extensions: [".js", ".jsx"],
+    extensions: [".web.js", ".js", ".jsx"],
   },
 
   plugins: [
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+    }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(
         process.env.NODE_ENV || "development"
@@ -72,6 +76,6 @@ module.exports = {
     }),
 
     new webpack.EnvironmentPlugin({ JEST_WORKER_ID: null }),
-    new webpack.DefinePlugin({ process: { env: {} } }),
+    // new webpack.DefinePlugin({ process: { env: {} } }),
   ],
 };
